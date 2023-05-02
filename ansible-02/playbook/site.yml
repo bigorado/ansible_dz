@@ -34,3 +34,32 @@
       register: create_db
       failed_when: create_db.rc != 0 and create_db.rc !=82
       changed_when: create_db.rc == 0
+  tasks:
+    - block:
+        - name: Download Vector
+          become: true
+          ansible.builtin.get_url:
+            url: "https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-1.x86_64.rpm"
+            dest: "./vector-{{ vector_version }}.rpm"
+    - name: Install Vector
+      become: true
+      ansible.builtin.apt:
+        name:
+          - vector-{{ vector_version }}.rpm
+      notify: Start vector service
+
+#      ansible.builtin.yum:
+#        - name: unarchive module
+#          unarchive:
+#            src: /root/testfiles/vector-0.29.1-aarch64-unknown-linux-musl.tar
+#            dest: "./root/testfiles/{{ vector_version }}.rpm"
+
+#        template:
+#          src: files/vector-0.29.1-1.x86_64.rpm
+#          dest: /root/testfiles/vector-0.29.1-1.x86_64.rpm
+#      ansible.builtin.yum:
+#        name:
+#          - vector-0.29.1-1.x86_64.rpm
+
+#        shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.vector.dev | bash
+#        url: "https://packages.timber.io/vector/0.29.1/vector_0.29.1-1_amd64.deb"
