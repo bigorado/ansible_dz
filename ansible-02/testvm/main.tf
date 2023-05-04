@@ -9,11 +9,12 @@ resource "yandex_vpc_subnet" "develop" {
 }
 
 
-data "yandex_compute_image" "ubuntu" {
+data "yandex_compute_image" "centos" {
   family = "${var.vm_web_os}"
 }
 resource "yandex_compute_instance" "platform" {
-  name        = "${ var.vm_web_platf }-${ var.vm_web_inst }"
+  count = 2
+  name        = "${ var.vm_web_platf }-${ var.vm_web_inst }-${count.index}"
 #  platform_id = "${var.vm_web_platf}"
 resources {
     cores         = var.vm_web_resources.cores
@@ -22,7 +23,7 @@ resources {
   }
   boot_disk {
     initialize_params {
-      image_id = data.yandex_compute_image.ubuntu.image_id
+      image_id = data.yandex_compute_image.centos.image_id
     }
   }
   scheduling_policy {
@@ -35,6 +36,13 @@ resources {
 
   metadata = {
     serial-port-enable = var.vm_metadata.serial-port-enable
-    ssh-keys           = "ubuntu:${local.ssh_key}"
+    ssh-keys           = "centos:${local.ssh_key}"
   }
+}
+
+data "template_file" "config" {
+ template = file("./config.yml")
+ vars = {
+ ssh_key = local.ssh_key
+ }
 }
