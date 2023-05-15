@@ -10,4 +10,4 @@ vector:
 lighthouse:
   hosts:
     lighthouse-01:
-      ansible_host: 158.160.48.236
+      ansible_host: 158.160.78.126

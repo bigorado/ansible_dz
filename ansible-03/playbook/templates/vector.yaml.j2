@@ -1,0 +1,18 @@
+sinks:
+    to_clickhouse:
+        compression: gzip
+        database: custom
+        endpoint: localhost:8123
+        healthcheck: false
+        inputs:
+        - our_log
+        skip_unknown_fields: true
+        table: my_table
+        type: clickhouse
+sources:
+    our_log:
+        ignore_older_secs: 600
+        include:
+        - /home/{{ ansible_user }}/logs/*.log
+        read_from: beginning
+        type: file

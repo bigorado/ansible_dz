@@ -1,0 +1,4 @@
+---
+# nginx_user_name: "www-data"
+lighthouse_vcs: "https://github.com/VKCOM/lighthouse"
+lighthouse_location_dir: "/var/www/lighthouse"
