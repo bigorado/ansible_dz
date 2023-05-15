@@ -21,5 +21,8 @@
 
 Ответ:
 
-[LightHouse](https://github.com/bigorado/lighthouse)
-[Vector](https://github.com/bigorado/vector)
+1) Роль [LightHouse](https://github.com/bigorado/lighthouse)
+
+2) Роль [Vector](https://github.com/bigorado/vector)
+
+3) [Playbook](https://github.com/bigorado/ansible_dz/tree/main/ansible-04/playbook)
